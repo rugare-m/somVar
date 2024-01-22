@@ -1,5 +1,3 @@
-# Predicting High Confidence ctDNA Somatic Variants with an Ensemble Machine Learning Model
-Predicting High Confidence ctDNA Somatic Variants with an Ensemble Machine Learning Model
 
 ### Background
 This project is part of my PhD program at the University of Liverpool. This repository includes work presented at the American Society of Human Genetics conference in Washington DC. The project is currently ongoing. 
