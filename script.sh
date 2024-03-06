@@ -29,10 +29,14 @@ high_confidence_vcf="${accession}_hc.vcf.gz"
 time python "$axolotl/bwa.py" -f "$ref_dir/hg38" -d "$cwd" -t 60
 time python "$axolotl/indexer.py" -d "$cwd"
 time python "$axolotl/gatk.py" -f "$compressed_fasta" -k "$axolotl/1000G_omni2.5.hg38.vcf.gz"
-time python "$axolotl/bcftools.py" -f "$compressed_fasta" -d "$cwd"
-time python "$axolotl/freebayes.py" -f "$uncompressed_fasta" -d "$cwd"
-time python "$axolotl/lofreq.py" -f "$compressed_fasta" -d "$cwd"
-time python "$axolotl/mutect2.py" -R "$compressed_fasta" -d "$cwd"
+
+# Run commands in parallel
+(time python "$axolotl/bcftools.py" -f "$compressed_fasta" -d "$cwd") &
+(time python "$axolotl/freebayes.py" -f "$uncompressed_fasta" -d "$cwd") &
+(time python "$axolotl/lofreq.py" -f "$compressed_fasta" -d "$cwd") &
+(time python "$axolotl/mutect2.py" -R "$compressed_fasta" -d "$cwd") &
+wait
+
 time python "$axolotl/annotate_serum.py" -f "$compressed_fasta" -d "$cwd"
 "$axolotl/serum_filter.sh" -c "$axolotl/$dbSNP" -d "$axolotl/$COSMIC"
 time python "$axolotl/merge.py" -f "$compressed_fasta" -d "$cwd/"
