@@ -5,7 +5,7 @@ conda create --name axolotl python=3.9.13
 conda activate axolotl
 
 # Install the required packages
-conda install bwa-mem2=2.2.1 gatk4=4.3.0.0 bcftools=1.15 samtools=1.15 freebayes=1.3.6 lofreq=2.1.5 
+conda install bwa-mem2=2.2.1 gatk4=4.3.0.0 bcftools=1.15 samtools=1.15 freebayes=1.3.6 lofreq=2.1.5 sra-tools=3.0.5
 
 pip install joblib==1.3.2 
 pip install pandas==2.2.1
