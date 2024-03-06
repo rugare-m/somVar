@@ -1,0 +1,7 @@
+pip install joblib==1.3.2 
+pip install pandas==2.2.1
+pip install scikit-learn==1.3.2
+pip install pysam==0.20.0
+pip install biopython==1.79
+pip install cyvcf2==0.30.18
+pip install pyfastx==1.1.0
