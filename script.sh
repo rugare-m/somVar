@@ -7,6 +7,7 @@
 #SBATCH --time=24:00:30
 
 # Paths
+axolotl="./axolotl"
 ref_dir="/users/rugarem/volatile/chapter3/data/reference"
 cwd="/users/rugarem/volatile/chapter3/nextflow"
 
@@ -24,19 +25,19 @@ high_confidence_vcf=$accession.high_conf.vcf.gz
 threshold=0.7
 model=high_depth_model.pkl
 
-
-time python bwa.py -f "$ref_dir/hg38" -d "$cwd" -t 60
-time python indexer.py -d "$cwd"
-time python gatk.py -f "$compressed_fasta" -k "1000G_omni2.5.hg38.vcf.gz"
-time python bcftools.py -f "$compressed_fasta" -d "$cwd"
-time python freebayes.py -f "$uncompressed_fasta" -d "$cwd"
-time python lofreq.py -f "$compressed_fasta" -d "$cwd"
-time python mutect2.py -R "$compressed_fasta" -d "$cwd"
-time python annotate_serum.py -f "$compressed_fasta" -d "$cwd"
-./serum_filter.sh -c "$dbSNP" -d "$COSMIC"
-time python merge.py -f "$compressed_fasta" -d "$cwd/"
-time python dataframe.py -f "$compressed_fasta" -b COSMIC_gatkbcftools.$accession.vcf.gz -r COSMIC_gatkfbayes.$accession.vcf.gz -l COSMIC_lofreq.$accession.vcf.gz -m COSMIC_mutect2.$accession.vcf.gz -x $accession.dedup.snps.vcf.gz
-time python predictor.py -o "$high_confidence_vcf" -x "$threshold" -d $accession.dedup.snps.vcf.gz -m "$model"
+# "$axolotl/"
+time python "$axolotl/bwa.py" -f "$ref_dir/hg38" -d "$cwd" -t 60
+time python "$axolotl/indexer.py"-d "$cwd"
+time python "$axolotl/gatk.py" -f "$compressed_fasta" -k "$axolotl/1000G_omni2.5.hg38.vcf.gz"
+time python "$axolotl/bcftools.py" -f "$compressed_fasta" -d "$cwd"
+time python "$axolotl/freebayes.py" -f "$uncompressed_fasta" -d "$cwd"
+time python "$axolotl/lofreq.py" -f "$compressed_fasta" -d "$cwd"
+time python "$axolotl/mutect2.py" -R "$compressed_fasta" -d "$cwd"
+time python "$axolotl/annotate_serum.py" -f "$compressed_fasta" -d "$cwd"
+"$axolotl/serum_filter.sh" -c "$axolotl/$dbSNP" -d "$axolotl/$COSMIC"
+time python "$axolotl/merge.py" -f "$compressed_fasta" -d "$cwd/"
+time python "$axolotl/dataframe.py" -f "$compressed_fasta" -b COSMIC_gatkbcftools.$accession.vcf.gz -r COSMIC_gatkfbayes.$accession.vcf.gz -l COSMIC_lofreq.$accession.vcf.gz -m COSMIC_mutect2.$accession.vcf.gz -x $accession.dedup.snps.vcf.gz
+time python "$axolotl/predictor.py" -o "$high_confidence_vcf" -x "$threshold" -d $accession.dedup.snps.vcf.gz -m "$axolotl/$model"
 
 # clean up
 rm -f *.bai COSMOS_* COSMIC_* gatkbcftools*vcf* gatkfbayes*vcf* lofreq.*vcf* mutect2*vcf* bcftools*vcf* *.bqsr.bam* fbayes.*vcf* *.dedup.snps.vcf.gz* *_vcfs.list
