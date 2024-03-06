@@ -31,5 +31,6 @@ mv common_all_20180418.vcf.gz "$cwd/axolotl"
 prefetch SRR10556218
 fasterq-dump SRR10556218
 rm "$cwd/SRR10556218.fastq"
+rm -r "$cwd/SRR10556218"
 bgzip "$cwd/SRR10556218_1.fastq"
 bgzip "$cwd/SRR10556218_2.fastq"
