@@ -1,33 +1,33 @@
 #!/bin/bash
 
 # Job name:
-#SBATCH --job-name=ml_pipeline
+#SBATCH --job-name=axolotl
 #SBATCH --mem=80G
 # Wall clock limit:
 #SBATCH --time=24:00:30
 
+# Variables
+accession="SRR10556218"
+threshold=0.7
+#options: high_depth_model.pkl or low_depth_model.pkl
+model=high_depth_model.pkl
+
+
 # Paths
-axolotl="./axolotl"
-ref_dir="/users/rugarem/volatile/chapter3/data/reference"
-cwd="/users/rugarem/volatile/chapter3/nextflow"
+cwd=$(pwd)
+axolotl="$cwd/axolotl"
+ref_dir="$cwd/FASTA"
 
 # Files
 compressed_fasta="$ref_dir/hg38.fa.gz"
 uncompressed_fasta="$ref_dir/uhg38.fa"
-dbSNP="common_all_20180418.vcf.gz"
-COSMIC="CosmicCodingMutsV98.vcf.gz"
-
-# Variables
-accession="SRR10556218"
-high_confidence_vcf=$accession.high_conf.vcf.gz
-
-# Recommended threshold for high depth model is 0.7 and 0.75 for low depth model
-threshold=0.7
-model=high_depth_model.pkl
+dbSNP="$axolotl/common_all_20180418.vcf.gz"
+COSMIC="$axolotl/CosmicCodingMutsV98.vcf.gz"
+high_confidence_vcf="${accession}_hc.vcf.gz"
 
 # "$axolotl/"
 time python "$axolotl/bwa.py" -f "$ref_dir/hg38" -d "$cwd" -t 60
-time python "$axolotl/indexer.py"-d "$cwd"
+time python "$axolotl/indexer.py" -d "$cwd"
 time python "$axolotl/gatk.py" -f "$compressed_fasta" -k "$axolotl/1000G_omni2.5.hg38.vcf.gz"
 time python "$axolotl/bcftools.py" -f "$compressed_fasta" -d "$cwd"
 time python "$axolotl/freebayes.py" -f "$uncompressed_fasta" -d "$cwd"
