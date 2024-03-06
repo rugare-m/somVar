@@ -11,9 +11,9 @@ cwd=$(pwd)
 
 #reference genome
 wget http://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/latest/hg38.fa.gz
-mv hg38.fa.gz "$cwd/FASTA"
-samtools faidx "$cwd/FASTA/hg38.fa.gz"
-bwa-mem2 index -p hg38 "$cwd/FASTA/hg38.fa.gz"
+samtools faidx "$cwd/hg38.fa.gz"
+bwa-mem2 index -p hg38 "$cwd/hg38.fa.gz"
+mv hg38* "$cwd/FASTA/"
 
 cp "$cwd/FASTA/hg38.fa.gz" "$cwd/FASTA/uhg38.fa.gz"
 gunzip "$cwd/FASTA/uhg38.fa.gz"
@@ -31,5 +31,6 @@ mv common_all_20180418.vcf.gz "$cwd/axolotl"
 prefetch SRR10556218
 fasterq-dump SRR10556218
 rm "$cwd/SRR10556218.fastq"
+rm -r "$cwd/SRR10556218"
 bgzip "$cwd/SRR10556218_1.fastq"
 bgzip "$cwd/SRR10556218_2.fastq"
