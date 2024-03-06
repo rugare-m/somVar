@@ -11,6 +11,8 @@ cwd=$(pwd)
 
 #reference genome
 wget http://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/latest/hg38.fa.gz
+gunzip hg38.fa.gz
+bgzip hg38.fa
 samtools faidx "$cwd/hg38.fa.gz"
 bwa-mem2 index -p hg38 "$cwd/hg38.fa.gz"
 mv hg38* "$cwd/FASTA/"
