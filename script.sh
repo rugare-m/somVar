@@ -27,7 +27,7 @@ high_confidence_vcf="${accession}_hc.vcf.gz"
 
 # "$axolotl/"
 time python "$axolotl/bwa.py" -f "$ref_dir/hg38" -d "$cwd" -t 60
-time python "$axolotl/indexer.py" -d "$cwd"
+time python "$axolotl/indexer.py" -d "$cwd/axolotl"
 time python "$axolotl/gatk.py" -f "$compressed_fasta" -k "$axolotl/1000G_omni2.5.hg38.vcf.gz"
 
 # Run commands in parallel
