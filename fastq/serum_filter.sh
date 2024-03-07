@@ -46,7 +46,7 @@ SnpSift annotate -v -id -noInfo "$cosmic_vcf" `dirname $vcf`/annotated_`basename
 bgzip `dirname $vcf`/COSMO_`basename $vcf .gz`
 
 #add synthetic sample name
-"$cwd"/lofreq_gt.sh -i `dirname $vcf`/COSMO_`basename $vcf` -g 1/1 -n 20 -o `dirname $vcf`/COSMOS_`basename $vcf`
+"$cwd"/fastq/lofreq_gt.sh -i `dirname $vcf`/COSMO_`basename $vcf` -g 1/1 -n 20 -o `dirname $vcf`/COSMOS_`basename $vcf`
 
 #remove contig names in vcf header
 gzip -cd `dirname $vcf`/COSMOS_`basename $vcf` | grep -v '^##contig=' > `dirname $vcf`/COSMIC_`basename $vcf .gz`
