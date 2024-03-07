@@ -38,11 +38,11 @@ bcftools filter -O z -o `dirname $vcf`/lowerx_`basename $vcf` -i 'INFO/AF < 0.4 
 bcftools filter -O z -o `dirname $vcf`/upper_`basename $vcf` -i 'INFO/AF < 0.90' `dirname $vcf`/lowerx_`basename $vcf` #exclude 1 ish germlines
 
 #annotate with dbsnp (all common SNPs)
-SnpSift annotate -id "$common_vcf" `dirname $vcf`/upper_`basename $vcf` >  `dirname $vcf`/annotated_`basename $vcf .gz`
+SnpSift annotate -v -id "$common_vcf" `dirname $vcf`/upper_`basename $vcf` >  `dirname $vcf`/annotated_`basename $vcf .gz`
 bgzip `dirname $vcf`/annotated_`basename $vcf .gz`
 
 #Annotate for COSMIC presence
-SnpSift annotate -id -noInfo "$cosmic_vcf" `dirname $vcf`/annotated_`basename $vcf` > `dirname $vcf`/COSMO_`basename $vcf .gz`
+SnpSift annotate -v -id -noInfo "$cosmic_vcf" `dirname $vcf`/annotated_`basename $vcf` > `dirname $vcf`/COSMO_`basename $vcf .gz`
 bgzip `dirname $vcf`/COSMO_`basename $vcf .gz`
 
 #add synthetic sample name
@@ -72,11 +72,11 @@ bcftools filter -O z -o `dirname $vcf`/lowerx_`basename $vcf` -i 'FORMAT/AF < 0.
 bcftools filter -O z -o `dirname $vcf`/upper_`basename $vcf` -i 'FORMAT/AF < 0.90' `dirname $vcf`/lowerx_`basename $vcf` #exclude 1 ish germlines
 
 #annotate with dbsnp (all common SNPs)
-SnpSift annotate -id "$common_vcf" `dirname $vcf`/upper_`basename $vcf` >  `dirname $vcf`/annotated_`basename $vcf .gz`
+SnpSift annotate -v -id "$common_vcf" `dirname $vcf`/upper_`basename $vcf` >  `dirname $vcf`/annotated_`basename $vcf .gz`
 bgzip `dirname $vcf`/annotated_`basename $vcf .gz`
 
 #Annotate for COSMIC presence
-SnpSift annotate -id -noInfo "$cosmic_vcf" `dirname $vcf`/annotated_`basename $vcf` > `dirname $vcf`/COSMIC_`basename $vcf .gz`
+SnpSift annotate -v -id -noInfo "$cosmic_vcf" `dirname $vcf`/annotated_`basename $vcf` > `dirname $vcf`/COSMIC_`basename $vcf .gz`
 bgzip `dirname $vcf`/COSMIC_`basename $vcf .gz`
 
 rm `dirname $vcf`/annotated_`basename $vcf`
@@ -95,11 +95,11 @@ bcftools filter -O z -o `dirname $vcf`/lowerx_`basename $vcf` -i 'FORMAT/AF < 0.
 bcftools filter -O z -o `dirname $vcf`/upper_`basename $vcf` -i 'FORMAT/AF < 0.90' `dirname $vcf`/lowerx_`basename $vcf` #exclude 1 ish germlines
 
 #annotate with dbsnp (all common SNPs)
-SnpSift annotate -id "$common_vcf" `dirname $vcf`/upper_`basename $vcf` >  `dirname $vcf`/annotated_`basename $vcf .gz`
+SnpSift annotate -v -id "$common_vcf" `dirname $vcf`/upper_`basename $vcf` >  `dirname $vcf`/annotated_`basename $vcf .gz`
 bgzip `dirname $vcf`/annotated_`basename $vcf .gz`
 
 #Annotate for COSMIC presence
-SnpSift annotate -id -noInfo "$cosmic_vcf" `dirname $vcf`/annotated_`basename $vcf` > `dirname $vcf`/COSMIC_`basename $vcf .gz`
+SnpSift annotate -v -id -noInfo "$cosmic_vcf" `dirname $vcf`/annotated_`basename $vcf` > `dirname $vcf`/COSMIC_`basename $vcf .gz`
 bgzip `dirname $vcf`/COSMIC_`basename $vcf .gz`
 
 #delete files
@@ -121,11 +121,11 @@ bcftools filter -O z -o `dirname $vcf`/upper_`basename $vcf` -i 'FORMAT/AF < 0.9
 
 
 #annotate with dbsnp (5% + in all dbsnp populations)
-SnpSift annotate -id "$common_vcf" `dirname $vcf`/upper_`basename $vcf` >  `dirname $vcf`/annotated_`basename $vcf .gz`
+SnpSift annotate -v -id "$common_vcf" `dirname $vcf`/upper_`basename $vcf` >  `dirname $vcf`/annotated_`basename $vcf .gz`
 bgzip `dirname $vcf`/annotated_`basename $vcf .gz`
 
 #Annotate for COSMIC presence
-SnpSift annotate -id -noInfo "$cosmic_vcf" `dirname $vcf`/annotated_`basename $vcf` > `dirname $vcf`/COSMIC_`basename $vcf .gz`
+SnpSift annotate -v -id -noInfo "$cosmic_vcf" `dirname $vcf`/annotated_`basename $vcf` > `dirname $vcf`/COSMIC_`basename $vcf .gz`
 bgzip `dirname $vcf`/COSMIC_`basename $vcf .gz`
 
 rm `dirname $vcf`/annotated_`basename $vcf`
