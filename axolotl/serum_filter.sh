@@ -26,7 +26,7 @@ if [ -z "$common_vcf" ] || [ -z "$cosmic_vcf" ]; then
 fi
 
 
-
+cwd=$(pwd)
 
 #lofreq
 for vcf in ./lofreq*vcf.gz
@@ -38,11 +38,11 @@ bcftools filter -O z -o `dirname $vcf`/lowerx_`basename $vcf` -i 'INFO/AF < 0.4 
 bcftools filter -O z -o `dirname $vcf`/upper_`basename $vcf` -i 'INFO/AF < 0.90' `dirname $vcf`/lowerx_`basename $vcf` #exclude 1 ish germlines
 
 #annotate with dbsnp (all common SNPs)
-java -Xmx8G -jar SnpSift.jar annotate -id "$common_vcf" `dirname $vcf`/upper_`basename $vcf` >  `dirname $vcf`/annotated_`basename $vcf .gz`
+java -Xmx8G -jar "$cwd/SnpSift.jar" annotate -id "$common_vcf" `dirname $vcf`/upper_`basename $vcf` >  `dirname $vcf`/annotated_`basename $vcf .gz`
 bgzip `dirname $vcf`/annotated_`basename $vcf .gz`
 
 #Annotate for COSMIC presence
-java -Xmx8G -jar SnpSift.jar annotate -id -noInfo "$cosmic_vcf" `dirname $vcf`/annotated_`basename $vcf` > `dirname $vcf`/COSMO_`basename $vcf .gz`
+java -Xmx8G -jar "$cwd/SnpSift.jar" annotate -id -noInfo "$cosmic_vcf" `dirname $vcf`/annotated_`basename $vcf` > `dirname $vcf`/COSMO_`basename $vcf .gz`
 bgzip `dirname $vcf`/COSMO_`basename $vcf .gz`
 
 #add synthetic sample name
@@ -72,11 +72,11 @@ bcftools filter -O z -o `dirname $vcf`/lowerx_`basename $vcf` -i 'FORMAT/AF < 0.
 bcftools filter -O z -o `dirname $vcf`/upper_`basename $vcf` -i 'FORMAT/AF < 0.90' `dirname $vcf`/lowerx_`basename $vcf` #exclude 1 ish germlines
 
 #annotate with dbsnp (all common SNPs)
-java -Xmx8G -jar SnpSift.jar annotate -id "$common_vcf" `dirname $vcf`/upper_`basename $vcf` >  `dirname $vcf`/annotated_`basename $vcf .gz`
+java -Xmx8G -jar "$cwd/SnpSift.jar" annotate -id "$common_vcf" `dirname $vcf`/upper_`basename $vcf` >  `dirname $vcf`/annotated_`basename $vcf .gz`
 bgzip `dirname $vcf`/annotated_`basename $vcf .gz`
 
 #Annotate for COSMIC presence
-java -Xmx8G -jar SnpSift.jar annotate -id -noInfo "$cosmic_vcf" `dirname $vcf`/annotated_`basename $vcf` > `dirname $vcf`/COSMIC_`basename $vcf .gz`
+java -Xmx8G -jar "$cwd/SnpSift.jar" annotate -id -noInfo "$cosmic_vcf" `dirname $vcf`/annotated_`basename $vcf` > `dirname $vcf`/COSMIC_`basename $vcf .gz`
 bgzip `dirname $vcf`/COSMIC_`basename $vcf .gz`
 
 rm `dirname $vcf`/annotated_`basename $vcf`
@@ -95,11 +95,11 @@ bcftools filter -O z -o `dirname $vcf`/lowerx_`basename $vcf` -i 'FORMAT/AF < 0.
 bcftools filter -O z -o `dirname $vcf`/upper_`basename $vcf` -i 'FORMAT/AF < 0.90' `dirname $vcf`/lowerx_`basename $vcf` #exclude 1 ish germlines
 
 #annotate with dbsnp (all common SNPs)
-java -Xmx8G -jar SnpSift.jar annotate -id "$common_vcf" `dirname $vcf`/upper_`basename $vcf` >  `dirname $vcf`/annotated_`basename $vcf .gz`
+java -Xmx8G -jar "$cwd/SnpSift.jar" annotate -id "$common_vcf" `dirname $vcf`/upper_`basename $vcf` >  `dirname $vcf`/annotated_`basename $vcf .gz`
 bgzip `dirname $vcf`/annotated_`basename $vcf .gz`
 
 #Annotate for COSMIC presence
-java -Xmx8G -jar SnpSift.jar annotate -id -noInfo "$cosmic_vcf" `dirname $vcf`/annotated_`basename $vcf` > `dirname $vcf`/COSMIC_`basename $vcf .gz`
+java -Xmx8G -jar "$cwd/SnpSift.jar" annotate -id -noInfo "$cosmic_vcf" `dirname $vcf`/annotated_`basename $vcf` > `dirname $vcf`/COSMIC_`basename $vcf .gz`
 bgzip `dirname $vcf`/COSMIC_`basename $vcf .gz`
 
 #delete files
@@ -121,11 +121,11 @@ bcftools filter -O z -o `dirname $vcf`/upper_`basename $vcf` -i 'FORMAT/AF < 0.9
 
 
 #annotate with dbsnp (5% + in all dbsnp populations)
-java -Xmx8G -jar SnpSift.jar annotate -id "$common_vcf" `dirname $vcf`/upper_`basename $vcf` >  `dirname $vcf`/annotated_`basename $vcf .gz`
+java -Xmx8G -jar "$cwd/SnpSift.jar" annotate -id "$common_vcf" `dirname $vcf`/upper_`basename $vcf` >  `dirname $vcf`/annotated_`basename $vcf .gz`
 bgzip `dirname $vcf`/annotated_`basename $vcf .gz`
 
 #Annotate for COSMIC presence
-java -Xmx8G -jar SnpSift.jar annotate -id -noInfo "$cosmic_vcf" `dirname $vcf`/annotated_`basename $vcf` > `dirname $vcf`/COSMIC_`basename $vcf .gz`
+java -Xmx8G -jar "$cwd/SnpSift.jar" annotate -id -noInfo "$cosmic_vcf" `dirname $vcf`/annotated_`basename $vcf` > `dirname $vcf`/COSMIC_`basename $vcf .gz`
 bgzip `dirname $vcf`/COSMIC_`basename $vcf .gz`
 
 rm `dirname $vcf`/annotated_`basename $vcf`
