@@ -7,7 +7,7 @@ def index_vcf_files(directory):
         for file in files:
             if file.endswith(".vcf.gz"):
                 file_path = os.path.join(root, file)
-                print("Indexing " + file_path, Flush=true)
+                print("Indexing " + file_path, flush=True)
                 subprocess.run(["tabix", "-p", "vcf", file_path])
 
 def main():
