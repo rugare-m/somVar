@@ -84,3 +84,4 @@ if __name__ == "__main__":
     # Delete the original vcf file
     subprocess.run(['rm', output_vcf])
     print("Process completed successfully.", flush=True)
+#end
