@@ -41,7 +41,7 @@ time python "$fastq/annotate_serum.py" -f "$compressed_fasta" -d "$cwd"
 "$fastq/serum_filter.sh" -c "$dbSNP" -d "$COSMIC"
 time python "$fastq/merge.py" -f "$compressed_fasta" -d "$cwd/"
 time python "$fastq/dataframe.py" -f "$compressed_fasta" -b COSMIC_gatkbcftools.$accession.vcf.gz -r COSMIC_gatkfbayes.$accession.vcf.gz -l COSMIC_lofreq.$accession.vcf.gz -m COSMIC_mutect2.$accession.vcf.gz -x $accession.dedup.snps.vcf.gz
-time python "$fastq/predictor.py" -o "$high_confidence_vcf" -x "$threshold" -d $accession.dedup.snps.vcf.gz -m "$fastq/$model"
+time python "$fastq/predictor.py" -o "$high_confidence_vcf" -x "$threshold" -d $accession.dedup.snps.vcf.gz -m "$model"
 
 # clean up
 rm -f *.bai COSMOS_* COSMIC_* gatkbcftools*vcf* gatkfbayes*vcf* lofreq.*vcf* mutect2*vcf* bcftools*vcf* *.bqsr.bam* fbayes.*vcf* *.dedup.snps.vcf.gz* *_vcfs.list
