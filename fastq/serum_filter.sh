@@ -26,7 +26,7 @@ if [ -z "$common_vcf" ] || [ -z "$cosmic_vcf" ]; then
 fi
 
 
-cwd=$(dirname "$(pwd)")
+cwd=$(pwd)
 
 #lofreq
 for vcf in "$cwd"/lofreq*vcf.gz

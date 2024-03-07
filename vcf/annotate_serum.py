@@ -35,10 +35,9 @@ if __name__ == "__main__":
 
     for directory in dirs:
         directory_path = directory
-        vcf_files_bwa2 = glob.glob(os.path.join(directory_path, "bcftools*.vcf.gz"))
-        vcf_files_fbayes = glob.glob(os.path.join(directory_path, "fbayes*.vcf.gz"))
+        vcf_files = glob.glob(os.path.join(directory_path, "*.vcf.gz"))
         
         # Create a Pool for parallel processing
-        with Pool(processes=2) as pool:
-            pool.starmap(process_vcf_files, [(vcf_files_bwa2, directory_path, reference_file), (vcf_files_fbayes, directory_path, reference_file)])
+        with Pool(processes=4) as pool:
+            pool.starmap(process_vcf_files, [(vcf_files, directory_path, reference_file), (vcf_files, directory_path, reference_file)])
 
