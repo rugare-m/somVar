@@ -80,7 +80,7 @@ if __name__ == "__main__":
     filter_vcf(merged, output_vcf, variant_identifiers)
 
     # Remove duplicate variants 
-    subprocess.run(['bcftools', 'norm', '-d', 'all', '-o', output_vcf.replace('.vcf.gz', '.dedup.vcf.gz'), output_vcf])
+    subprocess.run(['bcftools', 'norm', '-d', 'all', '-o', output_vcf.replace('.vcf.gz', 'hc.vcf.gz'), output_vcf])
     # Delete the original vcf file
     subprocess.run(['rm', output_vcf])
     print("Process completed successfully.", flush=True)
