@@ -42,10 +42,10 @@ def process_vcf_files(directory_path, reference):
         annotate_out = vcf_file.replace(".vcf.gz", ".annotated.vcf.gz")
 
         # index BAM if not already indexed
-        if directory_path+f"{sample_id}.bqsr.bam.bai" in os.listdir(directory_path):
+        if directory_path+f"{sample_id}.bam.bai" in os.listdir(directory_path):
             print("BAM file already indexed")
         else:
-            index = ["samtools", "index", directory_path+f"{sample_id}.bqsr.bam"]
+            index = ["samtools", "index", directory_path+f"{sample_id}.bam"]
             subprocess.run(index)
 
         # annotate vcf 
@@ -53,7 +53,7 @@ def process_vcf_files(directory_path, reference):
             "gatk", 
             "VariantAnnotator", 
             "-R", reference, 
-            "-I", directory_path+f"{sample_id}.bqsr.bam", 
+            "-I", directory_path+f"{sample_id}.bam", 
             "-V",norm_out, 
             "-O", annotate_out, 
             "-A", "FisherStrand",
