@@ -23,7 +23,7 @@ compressed_fasta="$ref_dir/hg38.fa.gz"
 uncompressed_fasta="$ref_dir/uhg38.fa"
 dbSNP="$fastq/common_all_20180418.vcf.gz"
 COSMIC="$fastq/CosmicCodingMutsV98.vcf.gz"
-high_confidence_vcf="${accession}_hc.vcf.gz"
+high_confidence_vcf="${accession}.dedup.snps.vcf.gz"
 
 # "$fastq/"
 time python "$fastq/bwa.py" -f "$ref_dir/hg38" -d "$cwd" -t 60
