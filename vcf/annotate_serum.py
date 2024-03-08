@@ -25,7 +25,7 @@ def process_vcf_files(chunk, output_dir, reference):
         bam = os.path.basename(vcf_file).split('.')[1] + ".bqsr.bam"
         bam_path = os.path.join(output_dir, bam)
         
-        annotate = ["gatk", "VariantAnnotator", "-R", reference, "-I", bam_path, "-V", vcf_file, "-O", out_path, "-A", "q"]
+        annotate = ["gatk", "VariantAnnotator", "-R", reference, "-I", bam_path, "-V", vcf_file, "-O", out_path, "-A", "AlleleFraction"]
         subprocess.run(annotate)
 
 if __name__ == "__main__":
