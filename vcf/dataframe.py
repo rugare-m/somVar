@@ -10,11 +10,11 @@ import argparse
 def parse_arguments():
     parser = argparse.ArgumentParser(description="VCF Processing Pipeline")
     parser.add_argument('-f', '--reference_genome_path', required=True, help="Path to the reference genome in fasta format")
-    parser.add_argument('-b', '--bcftools', required=True, help="Path to the bcftools vcf file")
-    parser.add_argument('-r', '--freebayes', required=True, help="Path to the freebayes vcf file")
-    parser.add_argument('-l', '--lofreq', required=True, help="Path to the lofreq vcf file")
-    parser.add_argument('-m', '--mutect2', required=True, help="Path to the mutect2 vcf file")
-    parser.add_argument('-x', '--merged', required=True, help="Path to the merged vcf file")
+    parser.add_argument('-v1', '--vcf1', required=True, help="Path to the vcf 1")
+    parser.add_argument('-v2', '--vcf2', required=True, help="Path to the vcf 2")
+    parser.add_argument('-v3', '--vcf3', required=True, help="Path to the vcf 3 ")
+    parser.add_argument('-v4', '--vcf4', required=True, help="Path to the vcf 4 ")
+    parser.add_argument('-vx', '--merged', required=True, help="Path to the merged vcf file")
     return parser.parse_args()
 
 # Function to extract the variants from a VCF file in format of chrom:pos:ref>alt
@@ -48,10 +48,10 @@ def extract_variants_from_vcf(vcf_path):
 
 # Path to VCFs
 args = parse_arguments()
-bcftools = args.bcftools
-freebayes = args.freebayes
-lofreq = args.lofreq
-mutect = args.mutect2
+caller1 = args.bcftools
+caller2 = args.freebayes
+caller3 = args.lofreq
+caller4 = args.mutect2
 
 merged = args.merged
 
@@ -60,7 +60,7 @@ merged = args.merged
 
 
 
-vcf_files = [bcftools, freebayes, lofreq, mutect, merged]
+vcf_files = [caller1, caller2, caller3, caller4, merged]
 
 for vcf_file in vcf_files:
     subprocess.run(["bcftools", "index", "-f", vcf_file])
@@ -70,10 +70,10 @@ for vcf_file in vcf_files:
 # get the set of variants for each VCF file
 print("Extracting variants from VCF files...", flush=True)
 merge_set = extract_variants_from_vcf(merged)
-bcf_set = extract_variants_from_vcf(bcftools)
-fbayes_set = extract_variants_from_vcf(freebayes)
-lfreq_set = extract_variants_from_vcf(lofreq)
-mutect_set = extract_variants_from_vcf(mutect)
+c1_set = extract_variants_from_vcf(caller1)
+c2_set = extract_variants_from_vcf(caller2)
+c3_set = extract_variants_from_vcf(caller3)
+c4_set = extract_variants_from_vcf(caller4)
 print("Done extracting variants.", flush=True)
 
 #dictionary to store the variants and their presence in each VCF file
@@ -82,10 +82,10 @@ variants_dict = {}
 # Iterate through the variants in merged VCF
 for variant in merge_set:
     variants_dict[variant] = {
-        "bcftools":int(variant in bcf_set),
-        "FreeBayes":int(variant in fbayes_set),
-        "LoFreq":int(variant in lfreq_set),
-        "Mutect2":int(variant in mutect_set),
+        "Caller 1":int(variant in c1_set),
+        "Caller 2":int(variant in c2_set),
+        "Caller 3":int(variant in c3_set),
+        "Caller 4":int(variant in c4_set),
     }
         
 print("Done creating dictionary.", flush=True)

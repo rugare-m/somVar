@@ -11,8 +11,8 @@ def parse_arguments():
 
     return parser.parse_args()
 
-def process_vcf_files(vcf_files, output_dir, reference):
-    for vcf_file in vcf_files:
+def process_vcf_files(chunk, output_dir, reference):
+    for vcf_file in chunk:
         tabix = ["tabix", "-p", "vcf", "-f", vcf_file]
         subprocess.run(tabix)
     
@@ -25,7 +25,7 @@ def process_vcf_files(vcf_files, output_dir, reference):
         bam = os.path.basename(vcf_file).split('.')[1] + ".bqsr.bam"
         bam_path = os.path.join(output_dir, bam)
         
-        annotate = ["gatk", "VariantAnnotator", "-R", reference, "-I", bam_path, "-V", vcf_file, "-O", out_path, "-A", "AlleleFraction"]
+        annotate = ["gatk", "VariantAnnotator", "-R", reference, "-I", bam_path, "-V", vcf_file, "-O", out_path, "-A", "q"]
         subprocess.run(annotate)
 
 if __name__ == "__main__":
@@ -36,8 +36,17 @@ if __name__ == "__main__":
     for directory in dirs:
         directory_path = directory
         vcf_files = glob.glob(os.path.join(directory_path, "*.vcf.gz"))
-        
+
+        # Check if there are at least 4 VCF files in the directory
+        if len(vcf_files) < 4:
+            print(f"Error: Directory {directory_path} does not contain enough VCF files for parallel processing (at least 4 required).")
+            continue
+
+        # Split the list of VCF files into chunks of 4
+        vcf_chunks = [vcf_files[i:i + 4] for i in range(0, len(vcf_files), 4)]
+
         # Create a Pool for parallel processing
-        with Pool(processes=4) as pool:
-            pool.starmap(process_vcf_files, [(vcf_files, directory_path, reference_file), (vcf_files, directory_path, reference_file)])
+        with Pool() as pool:
+            pool.starmap(process_vcf_files, [(chunk, directory_path, reference_file) for chunk in vcf_chunks])
+
 
