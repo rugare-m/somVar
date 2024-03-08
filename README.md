@@ -3,9 +3,9 @@
 This project is part of my PhD program at the University of Liverpool. This repository includes work presented at the American Society of Human Genetics conference in Washington DC. The project is currently ongoing. 
 
 <details>
- ### <summary> Dropdown Test?</summary>
+ ### <summary> Dropdown Test</summary>
 <br>
-dropdown.
+Dropdown.
 </details>
 
 ### Research Poster Abstract
