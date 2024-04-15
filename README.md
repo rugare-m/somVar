@@ -14,3 +14,4 @@ Tumour variants can predict response to treatment and inform personalized treatm
 ### Pipeline for developing and evaluating ML models 
 ![Github Chapter3](https://github.com/rugare-m/Predicting-High-Confidence-ctDNA-Somatic-Variants-with-an-Ensemble-Machine-Learning-Model/assets/88198662/86b5e0dd-960c-4145-a43f-30ea025a8eaa)
 
+<img width="450" alt="Screenshot 2024-04-15 at 14 41 09" src="https://github.com/rugare-m/Predicting-High-Confidence-ctDNA-Somatic-Variants-with-an-Ensemble-Machine-Learning-Model/assets/88198662/361c440b-3a69-465d-afd4-dcd00618322d">
