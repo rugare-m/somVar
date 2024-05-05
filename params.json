@@ -1,0 +1,12 @@
+{
+    "genome": "/path/to/compressed/indexed/reference/hg38.fa.gz",
+    "threads": 80,
+    "ugenome": "/path/to/uncompressed/reference/uhg38.fa",
+    "hg38": "/path/to/bwa/indexes/prefix/only/hg38",
+    "known": "/path/to/1000G_omni2.5.hg38.vcf.gz",
+    "cosmic": "/path/to/CosmicCodingMutsV98.vcf.gz",
+    "dbsnp": "/path/to/common_all_20180418.vcf.gz",
+    "model": "/path/to/high_depth_threshold.pkl",
+    "threshold": 0.75,
+    "output": "/path/to/output/file/SRR12083529.vcf.gz"
+}
