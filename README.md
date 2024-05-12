@@ -1,8 +1,10 @@
 
 ### Background
-This Nextflow pipeline outputs a set of high confidence ctDNA somatic variants, given paired FASTQ files as input. The pipeline maps reads to the reference using bwa2, calls variants with bcftools, FreeBayes, LoFreq and Mutect2, merges the output FASTQs, and finally predicts the high confidence variants using a Random Forest model. The tool was fitted on WES data and assumes WES data is being passed in. There are two models to choose from, a low depth model for data sequenced at ~10X, and a high depth model for data sequenced at ~200X. 
+This Nextflow pipeline outputs a set of high confidence ctDNA somatic variants, given paired FASTQ files as input. The pipeline maps reads to the reference using bwa2, calls variants with bcftools, FreeBayes, LoFreq and Mutect2, merges the output VCF files, and finally predicts the high confidence variants using a Random Forest model. The tool was fitted on WES data and assumes WES data is being passed in. There are two models to choose from, a low depth model for data sequenced at ~10X, and a high depth model for data sequenced at ~200X. 
 
 ### Requirements
+
+We'll need conda installed
 
 <details>
 <summary>Reference Genomes</summary>
@@ -28,6 +30,7 @@ First we need to setup the virtual environment with all the requirements:
 ```bash
 conda env create -f somvar.yml
 ```
+
 
 #### Next, we'll have to modify the params.json file
 genome = path to reference genome

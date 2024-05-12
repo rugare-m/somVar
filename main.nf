@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
 // aux
-params.gt = "$projectDir/Code/lofreq_gt.sh"
+params.gt = "$projectDir/lofreq_gt.sh"
 params.threads = 80
 
 // FASTQs
@@ -39,7 +39,7 @@ process bwaMem {
 
     script:
     """
-    python $projectDir/Code/bwa.py -r ${params.hg38} -t ${params.threads} -f1 ${params.f1} -f2 ${params.f2}
+    python $projectDir/bwa.py -r ${params.hg38} -t ${params.threads} -f1 ${params.f1} -f2 ${params.f2}
     """
 }
 
@@ -68,7 +68,7 @@ process bamPreprocessing {
 
     script :
     """
-    python $projectDir/Code/gatk.py -f ${params.genome} -k ${params.known}
+    python $projectDir/gatk.py -f ${params.genome} -k ${params.known}
     """
 }
 
@@ -85,7 +85,7 @@ process bcftoolsCall {
 
     script:
     """
-    python $projectDir/Code/bcftools.py -f ${params.genome} -b ${bam}
+    python $projectDir/bcftools.py -f ${params.genome} -b ${bam}
     """
 }
 
@@ -100,7 +100,7 @@ process lofreqCall {
 
     script:
     """
-    python $projectDir/Code/lofreq.py -f ${params.genome} -b ${bam}
+    python $projectDir/lofreq.py -f ${params.genome} -b ${bam}
     """
 }
 
@@ -114,7 +114,7 @@ process freebayesCall {
 
     script:
     """
-    python $projectDir/Code/freebayes.py -f ${params.ugenome} -b ${bam}
+    python $projectDir/freebayes.py -f ${params.ugenome} -b ${bam}
     """
 }
 
@@ -129,7 +129,7 @@ process mutectCall {
 
     script:
     """
-    python $projectDir/Code/mutect2.py -R ${params.genome} -b ${bam}
+    python $projectDir/mutect2.py -R ${params.genome} -b ${bam}
     """
 }
 
@@ -145,7 +145,7 @@ process preprocessBCF {
 
     script:
     """
-    python $projectDir/Code/annotate_serum.py -f ${params.genome} -v ${vcf} -b ${bam}
+    python $projectDir/annotate_serum.py -f ${params.genome} -v ${vcf} -b ${bam}
     """
 }
 
@@ -161,7 +161,7 @@ process preprocessFreebayes {
 
     script:
     """
-    python $projectDir/Code/annotate_serum.py -f ${params.genome} -v ${vcf} -b ${bam}
+    python $projectDir/annotate_serum.py -f ${params.genome} -v ${vcf} -b ${bam}
     
     """
 }
@@ -183,7 +183,7 @@ process annotateVCFs {
 
     script:
     """
-    $projectDir/Code/serum_filter.sh -c ${params.dbsnp} -d ${params.cosmic} -b ${bcftools} -l ${lofreq} -f ${fbayes} -m ${mutect2} -p $projectDir/
+    $projectDir/serum_filter.sh -c ${params.dbsnp} -d ${params.cosmic} -b ${bcftools} -l ${lofreq} -f ${fbayes} -m ${mutect2} -p $projectDir/
     """
 }
 
@@ -198,7 +198,7 @@ process mergeVCFs {
     script:
     """
     samtools index $projectDir/*bam
-    python $projectDir/Code/merge.py -f ${params.genome}/ -d $projectDir/ -x ${x}
+    python $projectDir/merge.py -f ${params.genome}/ -d $projectDir/ -x ${x}
     """
 }
 
@@ -219,7 +219,7 @@ process generateDataframe {
 
     script:
     """    
-    python $projectDir/Code/dataframe.py -f ${params.genome} -b ${bcftools} -r ${fbayes} -l ${lofreq} -m ${mutect2} -x ${merged}
+    python $projectDir/dataframe.py -f ${params.genome} -b ${bcftools} -r ${fbayes} -l ${lofreq} -m ${mutect2} -x ${merged}
     """
 }
 
@@ -234,7 +234,7 @@ process predictVariants {
 
     script:
     """    
-    python $projectDir/Code/predictor.py -o ${params.output} -x ${params.threshold} -d ${merged} -m ${params.model} -q ${dataframe}
+    python $projectDir/predictor.py -o ${params.output} -x ${params.threshold} -d ${merged} -m ${params.model} -q ${dataframe}
     rm -f $projectDir/*.bai $projectDir/COSMOS_* $projectDir/COSMIC_* $projectDir/gatkbcftools*vcf* $projectDir/gatkfbayes*vcf* $projectDir/lofreq.*vcf* $projectDir/mutect2*vcf* $projectDir/bcftools*vcf* $projectDir/*.bqsr.bam* $projectDir/fbayes.*vcf* $projectDir/*.dedup.snps.vcf.gz* $projectDir/*_vcfs.list $projectDir/dataframe.csv
     """
 }
