@@ -40,8 +40,7 @@ cosmic = path to CosmicCodingMutsV98.vcf.gz
 
 dbsnp = path to dbSNP common variants
 
-model = path to the model for predicting high confidence variants  ["high_depth_threshold.pkl" OR "low_depth_model.pkl"]
-
+model = path to the model for predicting high confidence variants  ["high_depth_model.pkl" OR "low_depth_model.pkl"]
 threshold = probability threshold to predict high confidence variant - default is 0.75
 
 output = path to name of output file 
