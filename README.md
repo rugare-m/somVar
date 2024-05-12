@@ -30,7 +30,7 @@ conda env create -f somvar.yml
 ```
 
 #### Next, we'll have to modify the params.json file
-genome = path to reference genome 
+genome = path to reference genome \n
 hg38 = path to reference genome bwa index prefix, eg "path/to/reference/bwa/index/hg38
 known = path to 1000G_omni2.5.hg38.vcf.gz
 cosmic = path to CosmicCodingMutsV98.vcf.gz
