@@ -3,14 +3,17 @@
 This Nextflow pipeline outputs a set of high confidence ctDNA somatic variants, give paired FASTQ files as input. 
 
 
+# Click to expand dropdown
+
 <details>
-<summary>Click to expand dropdown</summary>
+<summary>Dropdown Options</summary>
 
 - Option 1
 - Option 2
 - Option 3
 
 </details>
+
 
 
 ### Research Poster Abstract
