@@ -30,19 +30,28 @@ conda env create -f somvar.yml
 ```
 
 #### Next, we'll have to modify the params.json file
-genome = path to reference genome \n
+genome = path to reference genome
+
 hg38 = path to reference genome bwa index prefix, eg "path/to/reference/bwa/index/hg38
+
 known = path to 1000G_omni2.5.hg38.vcf.gz
+
 cosmic = path to CosmicCodingMutsV98.vcf.gz
+
 dbsnp = path to dbSNP common variants
+
 model = path to the model for predicting high confidence variants  ["high_depth_threshold.pkl" OR "low_depth_model.pkl"]
+
 threshold = probability threshold to predict high confidence variant - default is 0.75
+
 output = path to name of output file 
 
 ### Run the pipeline
 
 The pipeline expects FASTQ files compressed with bgzip in the somVar directory. 
+
 The pipeline expects FASTQs with the naming in this format ACCESSION_1/2.fastq.gz
+
 You can find the path to the virtual environment with:
 
 ```bash
