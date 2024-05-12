@@ -45,7 +45,7 @@ threshold = probability threshold to predict high confidence variant - default i
 
 output = path to name of output file 
 
-### Run the pipeline
+### Running the pipeline
 
 The pipeline expects FASTQ files compressed with bgzip in the somVar directory. 
 
