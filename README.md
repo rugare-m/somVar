@@ -1,6 +1,16 @@
 
 ### Background
-This project is part of my PhD program at the University of Liverpool. This repository includes work presented at the American Society of Human Genetics conference in Washington DC. The project is currently ongoing. 
+This Nextflow pipeline outputs a set of high confidence ctDNA somatic variants, give paired FASTQ files as input. 
+
+
+<details>
+<summary>Click to expand dropdown</summary>
+
+- Option 1
+- Option 2
+- Option 3
+
+</details>
 
 
 ### Research Poster Abstract
