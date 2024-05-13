@@ -44,7 +44,7 @@ process bwaMem {
 }
 
 process indexVCFs{
-    publishDir "$projectDir/databses", mode: 'symlink'
+    publishDir "$projectDir/databases", mode: 'symlink'
 
     input:
     file(vcf)
