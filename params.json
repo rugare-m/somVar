@@ -1,12 +1,12 @@
 {
-    "genome": "/Users/rugaremaruzani/Documents/somVar/reference/hg38.fa.gz",
+    "genome": "/users/rugarem/volatile/chapter3/data/reference/hg38.fa.gz",
     "threads": 80,
-    "ugenome": "/Users/rugaremaruzani/Documents/somVar/reference/uhg38.fa",
-    "hg38": "/Users/rugaremaruzani/Documents/somVar/reference/hg38",
-    "known": "/Users/rugaremaruzani/Documents/somVar/1000G_omni2.5.hg38.vcf.gz",
-    "cosmic": "/Users/rugaremaruzani/Documents/somVar/CosmicCodingMutsV98.vcf.gz",
-    "dbsnp": "/Users/rugaremaruzani/Documents/somVar/common_all_20180418.vcf.gz",
-    "model": "/Users/rugaremaruzani/Documents/somVar/high_depth_threshold.pkl",
+    "ugenome": "/users/rugarem/volatile/chapter3/data/reference/uhg38.fa",
+    "hg38": "/users/rugarem/volatile/chapter3/data/reference/hg38",
+    "known": "/users/rugarem/volatile/chapter3/nextflow/databases/1000G_omni2.5.hg38.vcf.gz",
+    "cosmic": "/users/rugarem/volatile/chapter3/nextflow/databases/CosmicCodingMutsV98.vcf.gz",
+    "dbsnp": "/users/rugarem/volatile/chapter3/nextflow/databases/common_all_20180418.vcf.gz",
+    "model": "/users/rugarem/volatile/chapter3/nextflow/high_depth_threshold.pkl",
     "threshold": 0.75,
-    "output": "/Users/rugaremaruzani/Documents/somVar/SRR12083529.vcf.gz"
+    "output": "/mnt/data1/users/rugarem/chapter3/nextflow/SRR12083529HC.vcf.gz"
 }

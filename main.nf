@@ -39,12 +39,12 @@ process bwaMem {
 
     script:
     """
-    python $projectDir/bwa.py -r ${params.hg38} -t ${params.threads} -f1 ${params.f1} -f2 ${params.f2}
+    python $projectDir/code/bwa.py -r ${params.hg38} -t ${params.threads} -f1 ${params.f1} -f2 ${params.f2}
     """
 }
 
 process indexVCFs{
-    publishDir "$projectDir/", mode: 'symlink'
+    publishDir "$projectDir/databses", mode: 'symlink'
 
     input:
     file(vcf)
@@ -58,24 +58,58 @@ process indexVCFs{
     """
 }
 
+
+
 process bamPreprocessing {
-    publishDir "$projectDir/", mode: 'symlink'
+    publishDir "$projectDir/code/", mode: 'symlink'
+    input:
+    file(bam)
+
+
+    output:
+    path "*.rg.bam"
+
+    script :
+    """
+    python $projectDir/code/gatk.py -f ${params.genome} -k ${params.known}
+    """
+}
+
+
+process bqsrProcess {
+    publishDir "$projectDir/code/", mode: 'symlink'
     input:
     file(bam)
 
     output:
-    path "*.bqsr.bam"
+    path "*.table"
 
     script :
     """
-    python $projectDir/gatk.py -f ${params.genome} -k ${params.known}
+    python $projectDir/code/bqsr.py -f ${params.genome} -k ${params.known} -b ${bam}
+    """
+}
+
+
+process applyBQSR {
+    publishDir "$projectDir/code/", mode: 'symlink'
+    input:
+    file(bam)
+    file(table)
+
+    output:
+    path "*.bam"
+
+    script :
+    """
+    python $projectDir/code/apply.py -f ${params.genome} -k ${params.known} -b ${bam} -t ${table}
     """
 }
 
 
 // Step 2: Variant calling
 process bcftoolsCall {
-    publishDir "$projectDir/", mode: 'symlink'
+    publishDir "$projectDir/code/", mode: 'symlink'
 
     input:
     file(bam)
@@ -85,12 +119,12 @@ process bcftoolsCall {
 
     script:
     """
-    python $projectDir/bcftools.py -f ${params.genome} -b ${bam}
+    python $projectDir/code/bcftools.py -f ${params.genome} -b ${bam}
     """
 }
 
 process lofreqCall {
-    publishDir "$projectDir/", mode: 'symlink'
+    publishDir "$projectDir/code/", mode: 'symlink'
 
     input:
     file(bam)
@@ -100,12 +134,12 @@ process lofreqCall {
 
     script:
     """
-    python $projectDir/lofreq.py -f ${params.genome} -b ${bam}
+    python $projectDir/code/lofreq.py -f ${params.genome} -b ${bam}
     """
 }
 
 process freebayesCall {
-    publishDir "$projectDir/", mode: 'symlink'
+    publishDir "$projectDir/code/", mode: 'symlink'
     input:
     file(bam)
 
@@ -114,12 +148,12 @@ process freebayesCall {
 
     script:
     """
-    python $projectDir/freebayes.py -f ${params.ugenome} -b ${bam}
+    python $projectDir/code/freebayes.py -f ${params.ugenome} -b ${bam}
     """
 }
 
 process mutectCall {
-    publishDir "$projectDir/", mode: 'symlink'
+    publishDir "$projectDir/code/", mode: 'symlink'
 
     input:
     file(bam)
@@ -129,12 +163,12 @@ process mutectCall {
 
     script:
     """
-    python $projectDir/mutect2.py -R ${params.genome} -b ${bam}
+    python $projectDir/code/mutect2.py -R ${params.genome} -b ${bam}
     """
 }
 
 process preprocessBCF {
-    publishDir "$projectDir/", mode: 'symlink'
+    publishDir "$projectDir/code/", mode: 'symlink'
 
     input:
     file(vcf) 
@@ -145,12 +179,12 @@ process preprocessBCF {
 
     script:
     """
-    python $projectDir/annotate_serum.py -f ${params.genome} -v ${vcf} -b ${bam}
+    python $projectDir/code/annotate_serum.py -f ${params.genome} -v ${vcf} -b ${bam}
     """
 }
 
 process preprocessFreebayes {
-    publishDir "$projectDir/", mode: 'symlink'
+    publishDir "$projectDir/code/", mode: 'symlink'
 
     input:
     file(vcf) 
@@ -161,7 +195,7 @@ process preprocessFreebayes {
 
     script:
     """
-    python $projectDir/annotate_serum.py -f ${params.genome} -v ${vcf} -b ${bam}
+    python $projectDir/code/annotate_serum.py -f ${params.genome} -v ${vcf} -b ${bam}
     
     """
 }
@@ -169,7 +203,7 @@ process preprocessFreebayes {
 
 // Step 3: Variant 'filtering'
 process annotateVCFs {
-    publishDir "$projectDir/", mode: 'symlink'
+    publishDir "$projectDir/code/", mode: 'symlink'
 
     input:
     file(bcftools)
@@ -183,7 +217,7 @@ process annotateVCFs {
 
     script:
     """
-    $projectDir/serum_filter.sh -c ${params.dbsnp} -d ${params.cosmic} -b ${bcftools} -l ${lofreq} -f ${fbayes} -m ${mutect2} -p $projectDir/
+    $projectDir/code/serum_filter.sh -c ${params.dbsnp} -d ${params.cosmic} -b ${bcftools} -l ${lofreq} -f ${fbayes} -m ${mutect2} -p $projectDir/
     """
 }
 
@@ -197,14 +231,14 @@ process mergeVCFs {
 
     script:
     """
-    samtools index $projectDir/*bam
-    python $projectDir/merge.py -f ${params.genome}/ -d $projectDir/ -x ${x}
+    samtools index $projectDir/code/*bqsr.bam
+    python $projectDir/code/merge.py -f ${params.genome}/ -d $projectDir/code/ -x ${x}
     """
 }
 
 // Step 5: Dataframe creation
 process generateDataframe {
-    publishDir "$projectDir/", mode: 'symlink'
+    publishDir "$projectDir/code/", mode: 'symlink'
     
     input:
     file(bcftools)
@@ -219,13 +253,13 @@ process generateDataframe {
 
     script:
     """    
-    python $projectDir/dataframe.py -f ${params.genome} -b ${bcftools} -r ${fbayes} -l ${lofreq} -m ${mutect2} -x ${merged}
+    python $projectDir/code/dataframe.py -f ${params.genome} -b ${bcftools} -r ${fbayes} -l ${lofreq} -m ${mutect2} -x ${merged}
     """
 }
 
 // Step 6: Prediction
 process predictVariants {
-    publishDir "$projectDir/", mode: 'move'
+    publishDir "$projectDir/code/", mode: 'move'
     input:
     file(merged)
     file(dataframe)
@@ -234,8 +268,8 @@ process predictVariants {
 
     script:
     """    
-    python $projectDir/predictor.py -o ${params.output} -x ${params.threshold} -d ${merged} -m ${params.model} -q ${dataframe}
-    rm -f $projectDir/*.bai $projectDir/COSMOS_* $projectDir/COSMIC_* $projectDir/gatkbcftools*vcf* $projectDir/gatkfbayes*vcf* $projectDir/lofreq.*vcf* $projectDir/mutect2*vcf* $projectDir/bcftools*vcf* $projectDir/*.bqsr.bam* $projectDir/fbayes.*vcf* $projectDir/*.dedup.snps.vcf.gz* $projectDir/*_vcfs.list $projectDir/dataframe.csv
+    python $projectDir/code/predictor.py -o ${params.output} -x ${params.threshold} -d ${merged} -m ${params.model} -q ${dataframe}
+    rm -f $projectDir/code/*.bai $projectDir/code/COSMOS_* $projectDir/code/COSMIC_* $projectDir/code/gatkbcftools*vcf* $projectDir/code/gatkfbayes*vcf* $projectDir/code/lofreq.*vcf* $projectDir/code/mutect2*vcf* $projectDir/code/bcftools*vcf* $projectDir/code/*.bqsr.bam* $projectDir/code/fbayes.*vcf* $projectDir/code/*.dedup.snps.vcf.gz* $projectDir/code/*_vcfs.list $projectDir/code/dataframe.csv $projectDir/code/*table $projectDir/code/*rg.bam
     """
 }
 
@@ -243,14 +277,16 @@ process predictVariants {
 // Workflow
 workflow {
     bam_ch = Channel.fromFilePairs( '*{1,2}.fastq.gz') | bwaMem
-    Channel.fromPath("*vcf.gz") | indexVCFs
+    indexVCF = Channel.fromPath("databases/*vcf.gz") | indexVCFs
     gatk_ch = bamPreprocessing(bam_ch)
-    bcf_ch  = bcftoolsCall(gatk_ch)
-    lof_ch  = lofreqCall(gatk_ch)
-    bay_ch  = freebayesCall(gatk_ch)
-    mut_ch  = mutectCall(gatk_ch)
-    ann1_ch = preprocessBCF(bcf_ch, gatk_ch)
-    ann2_ch = preprocessFreebayes(bay_ch, gatk_ch)
+    bqsr_ch = bqsrProcess(gatk_ch)
+    apply_ch = applyBQSR(gatk_ch, bqsr_ch)
+    bcf_ch  = bcftoolsCall(apply_ch)
+    lof_ch  = lofreqCall(apply_ch)
+    bay_ch  = freebayesCall(apply_ch)
+    mut_ch  = mutectCall(apply_ch)
+    ann1_ch = preprocessBCF(bcf_ch, apply_ch)
+    ann2_ch = preprocessFreebayes(bay_ch, apply_ch)
     text_ch = annotateVCFs(ann1_ch, lof_ch, ann2_ch, mut_ch)
     merge_ch = mergeVCFs(text_ch)
     datafr_ch = generateDataframe(ann1_ch, ann2_ch, lof_ch, mut_ch, merge_ch)
