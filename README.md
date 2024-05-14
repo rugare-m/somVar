@@ -8,8 +8,9 @@ We'll need conda installed
 
 <details>
 <summary>Reference Genomes</summary>
+It's recommended to store the reference files in the 'references' directory
 
- - 1x GRCh38 reference genome, compressed with bgzip.This genome must be indexed with bwa2, and samtools faidx & we'll need a dictionary created with gatk CreateSequenceDictionary. GATK, samtools and bwa2 will be installed in the virtual environment further on! It's recommended to store the reference files in the 'references' directory
+ - 1x GRCh38 reference genome, compressed with bgzip.This genome must be indexed with bwa2, and samtools faidx & we'll need a dictionary created with gatk CreateSequenceDictionary. GATK, samtools and bwa2 will be installed in the virtual environment further on! 
 
  - 1x uncompressed GRCh38 reference genome. The uncompressed genome will also need to be indexed with gatk CreateSequenceDictionary dict and samtools faidx
 </details>
