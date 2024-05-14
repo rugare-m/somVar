@@ -18,7 +18,7 @@ It's recommended to store the reference files in the 'references' directory
 <details>
 <summary>Databases</summary>
  
-Database VCF files **must** be stored in the 'databases' directory
+The following VCF files **must** be stored in the 'databases' directory
  
  - 1000G_omni2.5.hg38.vcf.gz
 
