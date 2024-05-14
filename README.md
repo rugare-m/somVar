@@ -1,16 +1,16 @@
 
 ### Background
-This Nextflow pipeline outputs a set of high confidence ctDNA somatic variants, given paired FASTQ files as input. The pipeline maps reads to the reference using bwa2, calls variants with bcftools, FreeBayes, LoFreq and Mutect2, merges the output VCF files, and finally predicts the high confidence variants using a Random Forest model. The tool was fitted on WES data and assumes WES data is being passed in. There are two models to choose from, a low depth model for data sequenced at ~10X, and a high depth model for data sequenced at ~200X. 
+This Nextflow pipeline outputs a set of high confidence ctDNA somatic variants, given paired FASTQ files as input. The pipeline maps reads to the reference using bwa2, calls variants with bcftools, FreeBayes, LoFreq and Mutect2, merges the output VCF files, and finally predicts the high confidence variants using a Random Forest model. The tool was fitted on WES data and assumes WES data is being passed in. There are two models to choose from, a low depth model for data sequenced at mode ~10X, and a high depth model for data sequenced at mode ~200X. 
 
 ### Requirements
 
-We'll need conda installed
+The latest version of conda installed - tested on conda 23.3.1
 
 <details>
 <summary>Reference Genomes</summary>
 It's recommended to store the reference files in the 'references' directory
 
- - 1x GRCh38 reference genome, compressed with bgzip.This genome must be indexed with bwa2, and samtools faidx & we'll need a dictionary created with gatk CreateSequenceDictionary. GATK, samtools and bwa2 will be installed in the virtual environment further on! 
+ - 1x GRCh38 reference genome, compressed with bgzip.This genome must be indexed with bwa2, and samtools faidx & we'll need a dict created with gatk CreateSequenceDictionary. GATK, samtools and bwa2 will be installed in the virtual environment further on! 
 
  - 1x uncompressed GRCh38 reference genome. The uncompressed genome will also need to be indexed with gatk CreateSequenceDictionary dict and samtools faidx
 </details>
@@ -18,17 +18,18 @@ It's recommended to store the reference files in the 'references' directory
 <details>
 <summary>Databases</summary>
  
-Database VCF files should be stored in the 'databases' directory
+Database VCF files **must** be stored in the 'databases' directory
  
  - 1000G_omni2.5.hg38.vcf.gz
 
  - CosmicCodingMutsV98.vcf.gz
 
  - dbSNP common variants vcf
+   
 </details>
 
 ### Usage
-First we need to setup the virtual environment with all the requirements:
+First we need to setup the virtual environment with all the dependencies:
 
 ```bash
 conda env create -f somvar.yml
