@@ -9,14 +9,16 @@ We'll need conda installed
 <details>
 <summary>Reference Genomes</summary>
 
- - 1x GRCh38 reference genome, compressed with bgzip.This genome must be indexed with bwa2, and samtools faidx & we'll need a dictionary created with gatk CreateSequenceDictionary. GATK, samtools and bwa2 will be installed in the virtual environment further on!
+ - 1x GRCh38 reference genome, compressed with bgzip.This genome must be indexed with bwa2, and samtools faidx & we'll need a dictionary created with gatk CreateSequenceDictionary. GATK, samtools and bwa2 will be installed in the virtual environment further on! It's recommended to store the reference files in the 'references' directory
 
  - 1x uncompressed GRCh38 reference genome. The uncompressed genome will also need to be indexed with gatk CreateSequenceDictionary dict and samtools faidx
 </details>
 
 <details>
 <summary>Databases</summary>
-
+ 
+Database VCF files should be stored in the 'databases' directory
+ 
  - 1000G_omni2.5.hg38.vcf.gz
 
  - CosmicCodingMutsV98.vcf.gz
@@ -52,7 +54,7 @@ output = path to name of output file
 
 The pipeline expects FASTQ files compressed with bgzip in the somVar directory. 
 
-The pipeline expects FASTQs with the naming in this format ACCESSION_1/2.fastq.gz
+The pipeline expects FASTQs with the naming in this format ACCESSION_1/2.fastq.gz. 
 
 You can find the path to the virtual environment with:
 
