@@ -56,9 +56,7 @@ output = path to name of output file
 
 ### Running the pipeline
 
-The pipeline expects FASTQ files compressed with bgzip in the somVar directory. 
-
-The pipeline expects FASTQs with the naming in this format ACCESSION_1/2.fastq.gz. 
+The pipeline expects FASTQ files compressed with bgzip in the somVar directory & with the naming in the format: ACCESSION_1/2.fastq.gz. 
 
 You can find the path to the virtual environment with:
 
