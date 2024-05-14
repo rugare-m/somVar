@@ -8,6 +8,7 @@ The latest version of conda must be installed - tested version is conda 23.3.1
 
 <details>
 <summary>Reference Genomes</summary>
+ 
 It's recommended to store the reference files in the 'references' directory
 
  - 1x GRCh38 reference genome, compressed with bgzip.This genome must be indexed with bwa2, and samtools faidx & we'll need a dict created with gatk CreateSequenceDictionary. GATK, samtools and bwa2 will be installed in the virtual environment further on! 
