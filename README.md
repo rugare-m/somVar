@@ -1,8 +1,8 @@
 
-# Background
+# What is somVar
 This Nextflow pipeline outputs a set of high confidence ctDNA somatic variants, given paired FASTQ files as input. The pipeline maps reads to the reference using bwa2, calls variants with bcftools, FreeBayes, LoFreq and Mutect2, merges the output VCF files, and finally predicts the high confidence variants using a Random Forest model. The tool was fitted on WES data and assumes WES data is being passed in. There are two models to choose from, a low depth model for data sequenced at ~10X, and a high depth model for data sequenced at ~200X. 
 
-### Requirements
+# Requirements
 
 The latest version of conda must be installed - tested version is conda 23.3.1
 
@@ -29,7 +29,7 @@ The following VCF files **must** be stored in the 'databases' directory
    
 </details>
 
-### Usage
+# Usage
 First we need to setup the virtual environment with all the dependencies:
 
 ```bash
@@ -54,7 +54,7 @@ threshold = probability threshold to predict high confidence variants - default 
 
 output = path to name of output file 
 
-### Running the pipeline
+# Running the pipeline
 
 The pipeline expects FASTQ files compressed with bgzip in the somVar directory & with the naming in the format: ACCESSION_1/2.fastq.gz. 
 
